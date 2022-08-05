@@ -1,8 +1,9 @@
 function DAQ_aquire
 %%ABOUT THIS FUNCTION
 
-%This is a general function for aquiring data from a DAQ created by Amberle 
-%McKee. To modify this code for your particular application, follow these 
+%This is a general function for aquiring data from a set of eight pressure 
+%sensors attached to a DAQ created by Amberle McKee. 
+%To modify this code for your particular application, follow these 
 %steps:
 %1)Run this line of code (d = daqlist("ni")) and look in the first 
 %  column of the output to determine your device's ID
@@ -13,9 +14,6 @@ function DAQ_aquire
 %    -replace the third input with the analog channel you want to aquire
 %    data from in ""
 %    -replace the fourth input with they type of data you are looking for.
-%    The options include, "Audio","Bridge","Current","Digital","EdgeCount",
-%    "Frequency","IEPE","Microphone","Position","PulseWidth","RTD",
-%    "Thermocouple","Voltage"
 %4)Repeat step 3 adding as many addinput functions as you require until you
 %  have one function per input you wish to read from.
 %5)Find the line that reads "data = read(dq, seconds(1));"
@@ -23,9 +21,11 @@ function DAQ_aquire
 %  would like to record for by changing the number in seconds() or change 
 %  this input to a number to specify the number of scans you would like to
 %  record.
-%7)Scroll to the section marked "Analysis" and adjust the figures to plot
+%7)Scroll to the sectoin marked "Calibration". Adjust these values for the
+%  calibration of your specific sensors.
+%8)Scroll to the section marked "Analysis" and adjust the figures to plot
 %  the data that you are interested in.
-%8)Scroll to the section marked "Save your data". If you do not wish to
+%9)Scroll to the section marked "Save your data". If you do not wish to
 %  save your data, comment these lines out. Otherwise, change the path to the 
 %  destination you'd like your data to end up in. Then change the filename
 %  (which is currently DataFromDAQ) to your preferred filename. This
@@ -70,21 +70,26 @@ new.ai7=(1869.7*(data.Dev3_ai7-0.0339))-760.87;
 %% Plot raw
 
 figure
-plot(data.Time,data.Dev3_ai3)
+plot(data.Time,data.Dev3_ai0)
+hold on
+plot(data.Time,data.Dev3_ai1)
 hold on
 plot(data.Time,data.Dev3_ai2)
-% hold on
-% plot(data.Time,data.Dev3_ai3)
-% hold on
-% plot(data.Time,data.Dev3_ai0)
+hold on
+plot(data.Time,data.Dev3_ai3)
+hold on
+plot(data.Time,data.Dev3_ai4)
+hold on
+plot(data.Time,data.Dev3_ai5)
+hold on
+plot(data.Time,data.Dev3_ai6)
+hold on
+plot(data.Time,data.Dev3_ai7)
 xlabel('Time (s)')
 ylabel('Pressure (voltage from sensors)')
-legend('S4','S3')
+legend('S1','S2','S3','S4','S5','S6','S7','S8')
 
 %% Analysis
-% figure
-% plot(data.Time, data.Variables);
-% ylabel("Voltage (V)")
 
 if 1
 
